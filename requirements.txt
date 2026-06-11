@@ -1,0 +1,11 @@
+moviepy
+requests
+python-dotenv
+gtts
+google-api-python-client
+google-auth-oauthlib
+google-auth-httplib2
+Pillow
+numpy
+imageio
+imageio-ffmpeg
