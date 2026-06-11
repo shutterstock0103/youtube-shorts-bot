@@ -1,0 +1,44 @@
+import requests
+import random
+import os
+from config import PIXABAY_API_KEY, MUSIC_CATEGORIES
+
+MUSIC_FOLDER = "assets/music"
+
+os.makedirs(MUSIC_FOLDER, exist_ok=True)
+
+
+def download_music():
+
+    category = random.choice(MUSIC_CATEGORIES)
+
+    url = (
+        f"https://pixabay.com/api/audio/"
+        f"?key={PIXABAY_API_KEY}"
+        f"&q={category}"
+        f"&per_page=20"
+    )
+
+    response = requests.get(url)
+    data = response.json()
+
+    if not data["hits"]:
+        raise Exception("No music found.")
+
+    music = random.choice(data["hits"])
+
+    music_url = music["audio"]
+
+    filename = os.path.join(
+        MUSIC_FOLDER,
+        f"{category}_{music['id']}.mp3"
+    )
+
+    r = requests.get(music_url)
+
+    with open(filename, "wb") as f:
+        f.write(r.content)
+
+    print("Downloaded music:", filename)
+
+    return filename

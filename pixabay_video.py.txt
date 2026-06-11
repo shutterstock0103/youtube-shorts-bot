@@ -1,0 +1,44 @@
+import requests
+import random
+import os
+from config import PIXABAY_API_KEY, VIDEO_CATEGORIES
+
+VIDEO_FOLDER = "assets/videos"
+
+os.makedirs(VIDEO_FOLDER, exist_ok=True)
+
+
+def download_video():
+
+    category = random.choice(VIDEO_CATEGORIES)
+
+    url = (
+        f"https://pixabay.com/api/videos/"
+        f"?key={PIXABAY_API_KEY}"
+        f"&q={category}"
+        f"&per_page=20"
+    )
+
+    response = requests.get(url)
+    data = response.json()
+
+    if not data["hits"]:
+        raise Exception("No videos found.")
+
+    video = random.choice(data["hits"])
+
+    video_url = video["videos"]["medium"]["url"]
+
+    filename = os.path.join(
+        VIDEO_FOLDER,
+        f"{category}_{video['id']}.mp4"
+    )
+
+    r = requests.get(video_url)
+
+    with open(filename, "wb") as f:
+        f.write(r.content)
+
+    print("Downloaded video:", filename)
+
+    return filename

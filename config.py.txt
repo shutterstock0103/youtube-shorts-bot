@@ -1,0 +1,25 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+PIXABAY_API_KEY = os.getenv("PIXABAY_API_KEY")
+
+VIDEO_CATEGORIES = [
+    "ocean",
+    "forest",
+    "mountains",
+    "rain",
+    "waterfall",
+    "sunset",
+    "space",
+    "night sky"
+]
+
+MUSIC_CATEGORIES = [
+    "relaxing",
+    "meditation",
+    "ambient",
+    "inspirational",
+    "peaceful"
+]

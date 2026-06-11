@@ -1,0 +1,8 @@
+from pixabay_video import download_video
+from pixabay_music import download_music
+
+video_file = download_video()
+music_file = download_music()
+
+print(video_file)
+print(music_file)
